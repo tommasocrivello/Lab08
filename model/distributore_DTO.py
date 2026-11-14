@@ -17,6 +17,12 @@ class Distributore:
     def get_prezzi(self):
         """ Aggiorna e Restituisce la lista di prezzi (self.lista_prezzi) associati al distributore"""
         # TODO
+        # Se la lista è ancora vuota (None), interrogo il database [LAZY FETCHING]
+        if self.lista_prezzi is None:
+            self.lista_prezzi = PrezzoDAO.get_prezzi(self.id)
+
+        # Restituisco la lista (appena scaricata, o già presente in memoria)
+        return self.lista_prezzi
 
     def __eq__(self, other):
         return isinstance(other, Distributore) and self.id == other.id

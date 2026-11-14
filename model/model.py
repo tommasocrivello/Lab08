@@ -26,6 +26,17 @@ class Model:
         :return: lista di tuple --> (nome del distributore, media), es. (Distributore A, 1.789)
         """
         # TODO
+        risultato = []
+        for distributore in self._distributori:
+            tutti_i_prezzi = distributore.get_prezzi()
+            # L'attributo .data è un oggetto datetime, quindi possiamo estrarre il mese con .month
+            prezzi_mese = [p.prezzo_litro for p in tutti_i_prezzi if p.data.month == mese]
+            if len(prezzi_mese) > 0:
+                media = sum(prezzi_mese) / len(prezzi_mese)
+                risultato.append((distributore.nome, media))
+            else:
+                risultato.append((distributore.nome, 0.0))
+        return risultato
 
     def get_sequenza_ottima(self, mese:int):
         """
